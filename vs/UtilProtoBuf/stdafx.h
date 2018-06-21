@@ -12,5 +12,15 @@
 #include <windows.h>
 
 
+#include <atomic>
 
 // TODO: reference additional headers your program requires here
+
+
+#ifdef _DEBUG
+#pragma comment(lib,"google/protobuf/lib/libprotocd.lib")
+#pragma comment(lib,"google/protobuf/lib/libprotobufd.lib")
+#else
+#pragma comment(lib,"google/protobuf/lib/libprotoc.lib")
+#pragma comment(lib,"google/protobuf/lib/libprotobuf.lib")
+#endif
