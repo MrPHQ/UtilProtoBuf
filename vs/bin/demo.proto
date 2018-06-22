@@ -1,0 +1,18 @@
+syntax="proto3";
+
+message Pair1 {
+    string key = 1;
+    uint32 value = 2;
+}
+
+message Pair2 {
+    string key = 1;
+    int32 value = 2;
+	bool bv = 3;
+}
+
+message Pair {
+    uint32 id = 1;
+    Pair1 p1 = 2;
+	Pair2 p2 = 3;
+}
