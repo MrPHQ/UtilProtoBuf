@@ -20,6 +20,12 @@ namespace UTIL_PROTOBUF
 			消息类型名称.
 		*/
 		CProtoMessage(const char* pMsgName);
+		/**
+		@brief 构造函数.
+		\param bNested
+			嵌套消息.
+		*/
+		CProtoMessage(bool bNested);
 		~CProtoMessage();
 
 	public:
@@ -29,6 +35,13 @@ namespace UTIL_PROTOBUF
 			消息类型名称.
 		*/
 		int OpenMsg(const char* pMsgName);
+
+		/**
+		@brief 获取嵌套消息.
+		\param pFieldName
+			消息类型名称.
+		*/
+		CProtoMessage* GetNestedMsg(const char* pFieldName);
 
 		/**
 		@brief.
@@ -70,41 +83,43 @@ namespace UTIL_PROTOBUF
 
 		/**
 		@brief. 读取数据
-		\param pName
+		\param pFieldName
 			消息字段名称
 		*/
-		int32 GetInt32(const char* pName) const;
-		int64 GetInt64(const char* pName) const;
-		uint32 GetUInt32(const char* pName) const;
-		uint64 GetUInt64(const char* pName) const;
-		float GetFloat(const char* pName) const;
-		double GetDouble(const char* pName) const;
-		bool GetBool(const char* pName) const;
-		string GetString(const char* pName) const;
-		int GetStringEx(const char* pName, char* buff, int len) const;
+		int32 GetInt32(const char* pFieldName) const;
+		int64 GetInt64(const char* pFieldName) const;
+		uint32 GetUInt32(const char* pFieldName) const;
+		uint64 GetUInt64(const char* pFieldName) const;
+		float GetFloat(const char* pFieldName) const;
+		double GetDouble(const char* pFieldName) const;
+		bool GetBool(const char* pFieldName) const;
+		string GetString(const char* pFieldName) const;
+		int GetStringEx(const char* pFieldName, char* buff, int len) const;
 
 		/**
 		@brief. 写数据
 		\param pName
 			消息字段名称
 		*/
-		int SetInt32(const char* pName, int32 value) const;
-		int SetInt64(const char* pName, int64 value) const;
-		int SetUInt32(const char* pName, uint32 value) const;
-		int SetUInt64(const char* pName, uint64 value) const;
-		int SetFloat(const char* pName, float value) const;
-		int SetDouble(const char* pName, double value) const;
-		int SetBool(const char* pName, bool value) const;
-		int SetString(const char* pName, const string& value) const;
-		int SetStringEx(const char* pName, const void* value, int len) const;
+		int SetInt32(const char* pFieldName, int32 value) const;
+		int SetInt64(const char* pFieldName, int64 value) const;
+		int SetUInt32(const char* pFieldName, uint32 value) const;
+		int SetUInt64(const char* pFieldName, uint64 value) const;
+		int SetFloat(const char* pFieldName, float value) const;
+		int SetDouble(const char* pFieldName, double value) const;
+		int SetBool(const char* pFieldName, bool value) const;
+		int SetString(const char* pFieldName, const string& value) const;
+		int SetStringEx(const char* pFieldName, const void* value, int len) const;
 	private:
-		std::pair<const Reflection*, const FieldDescriptor*> GetRef(const char* pName) const;
+		std::pair<const Reflection*, const FieldDescriptor*> GetRef(const char* pFieldName) const;
+		bool MatchFieldType(FieldDescriptor::Type nFieldType, const FieldDescriptor*) const;
 	private:
 		/**< .*/
 		Descriptor* m_pDescriptor;
 		/**< .*/
 		Message* m_pMessage;
+		/**< 嵌套消息类型 .*/
+		BOOL m_bNested;
 	};
-
 }
 #endif

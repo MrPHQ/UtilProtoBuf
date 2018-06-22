@@ -16,6 +16,7 @@
 
 // TODO: reference additional headers your program requires here
 
+#include "../include/UtilProtoBuf.h"
 
 #ifdef _DEBUG
 #pragma comment(lib,"google/protobuf/lib/libprotocd.lib")
@@ -24,3 +25,5 @@
 #pragma comment(lib,"google/protobuf/lib/libprotoc.lib")
 #pragma comment(lib,"google/protobuf/lib/libprotobuf.lib")
 #endif
+
+#define MSG_INFO(...) UTILS::API::DEBUG_INFO("UtilProtoBuf", __VA_ARGS__);

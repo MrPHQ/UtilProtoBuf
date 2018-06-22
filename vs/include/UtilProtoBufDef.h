@@ -33,6 +33,8 @@ namespace UTIL_PROTOBUF
 		UTIL_PROTOBUF_ERROR_DLL = -10,
 		/**< 没有找到消息类型名称.*/
 		UTIL_PROTOBUF_ERROR_NOT_FIND_MSG = -11,
+		/**< 消息类型字段类型错误.*/
+		UTIL_PROTOBUF_ERROR_FIELD_TYPE = -12,
 	};
 }
 
