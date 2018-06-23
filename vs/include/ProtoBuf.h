@@ -40,6 +40,8 @@ namespace UTIL_PROTOBUF
 		@brief 获取嵌套消息.
 		\param pFieldName
 			消息类型名称.
+		\return CProtoMessage*
+			返回指针,外部释放.
 		*/
 		CProtoMessage* GetNestedMsg(const char* pFieldName);
 
