@@ -41,6 +41,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 	std::cin.ignore();
 	{
+#if 0
 		UTIL_PROTOBUF::CProtoMessage msg("Pair");
 		msg.Parse(buff, iDataLen);
 		std::cout << msg.GetUInt32("id") << std::endl;
@@ -54,6 +55,21 @@ int _tmain(int argc, _TCHAR* argv[])
 		std::cout << p->GetInt32("value") << std::endl;
 		std::cout << p->GetBool("bv") << std::endl;
 		delete p;
+#else
+		UTIL_PROTOBUF::CProtoMessage msg("Pair");
+		msg.Parse(buff, iDataLen);
+		std::cout << msg.GetUInt32("id") << std::endl;
+
+		UTIL_PROTOBUF::CProtoMessage msgNested;
+		msg.GetNestedMsgEx("p1", msgNested);
+		std::cout << msgNested.GetString("key") << std::endl;
+		std::cout << msgNested.GetUInt32("value") << std::endl;
+		msgNested.Clear();
+		msg.GetNestedMsgEx("p2", msgNested);
+		std::cout << msgNested.GetString("key") << std::endl;
+		std::cout << msgNested.GetInt32("value") << std::endl;
+		std::cout << msgNested.GetBool("bv") << std::endl;
+#endif
 	}
 	std::cin.ignore();
 	return 0;

@@ -90,6 +90,35 @@ namespace UTIL_PROTOBUF
 		return pObj;
 	}
 
+	int CProtoMessage::GetNestedMsgEx(const char* pFieldName, CProtoMessage& msg)
+	{
+		if (nullptr == pFieldName){
+			return UTIL_PROTOBUF_ERROR_PAR;
+		}
+		if (!IsOpen()){
+			return UTIL_PROTOBUF_ERROR_FAIL;
+		}
+		DynamicMessageFactory* pMsgFactory = UTIL_PROTOBUF::CProtoFileMgr::getSingletonPtr()->GetDynamicMessageFactory();
+		if (nullptr == pMsgFactory){
+			return UTIL_PROTOBUF_ERROR_FAIL;
+		}
+
+		const Reflection *reflection = m_pMessage->GetReflection();
+		const FieldDescriptor *field = NULL;
+		field = m_pDescriptor->FindFieldByName(pFieldName);
+		if (nullptr == field){
+			return UTIL_PROTOBUF_ERROR_FAIL;
+		}
+		Message* pMsg = reflection->MutableMessage(m_pMessage, field, pMsgFactory);
+		if (nullptr == pMsg){
+			return UTIL_PROTOBUF_ERROR_FAIL;
+		}
+		msg.m_pDescriptor = (Descriptor*)field->message_type();
+		msg.m_pMessage = pMsg;
+		msg.m_bNested = TRUE;
+		return UTIL_PROTOBUF_ERROR_SUCCESS;
+	}
+
 	void CProtoMessage::Close()
 	{
 		if (!m_bNested){
@@ -250,6 +279,18 @@ namespace UTIL_PROTOBUF
 		return min(len, str.length());
 	}
 
+	int CProtoMessage::GetEnum(const char* pFieldName) const
+	{
+		std::pair<const Reflection*, const FieldDescriptor*> ref = GetRef(pFieldName);
+		if (nullptr == ref.first || nullptr == ref.second){
+			return 0;
+		}
+		if (!MatchFieldType(FieldDescriptor::TYPE_ENUM, ref.second)){
+			return 0;
+		}
+		return ref.first->GetEnumValue(*m_pMessage, ref.second);
+	}
+
 	int CProtoMessage::SetInt32(const char* pName, int32 value) const
 	{
 		std::pair<const Reflection*, const FieldDescriptor*> ref = GetRef(pName);
@@ -368,6 +409,19 @@ namespace UTIL_PROTOBUF
 		}
 		std::string str((const char*)value, len);
 		return SetString(pName, str);
+	}
+
+	int CProtoMessage::SetEnum(const char* pName, int32 value) const
+	{
+		std::pair<const Reflection*, const FieldDescriptor*> ref = GetRef(pName);
+		if (nullptr == ref.first || nullptr == ref.second){
+			return UTIL_PROTOBUF_ERROR_FAIL;
+		}
+		if (!MatchFieldType(FieldDescriptor::TYPE_ENUM, ref.second)){
+			return UTIL_PROTOBUF_ERROR_FIELD_TYPE;
+		}
+		ref.first->SetEnumValue(m_pMessage, ref.second, value);
+		return UTIL_PROTOBUF_ERROR_SUCCESS;
 	}
 
 	std::pair<const Reflection*, const FieldDescriptor*> CProtoMessage::GetRef(const char* pName) const

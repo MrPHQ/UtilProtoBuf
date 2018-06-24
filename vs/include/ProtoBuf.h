@@ -44,6 +44,7 @@ namespace UTIL_PROTOBUF
 			返回指针,外部释放.
 		*/
 		CProtoMessage* GetNestedMsg(const char* pFieldName);
+		int GetNestedMsgEx(const char* pFieldName, CProtoMessage&);
 
 		/**
 		@brief.
@@ -97,6 +98,7 @@ namespace UTIL_PROTOBUF
 		bool GetBool(const char* pFieldName) const;
 		string GetString(const char* pFieldName) const;
 		int GetStringEx(const char* pFieldName, char* buff, int len) const;
+		int GetEnum(const char* pFieldName) const;
 
 		/**
 		@brief. 写数据
@@ -112,6 +114,7 @@ namespace UTIL_PROTOBUF
 		int SetBool(const char* pFieldName, bool value) const;
 		int SetString(const char* pFieldName, const string& value) const;
 		int SetStringEx(const char* pFieldName, const void* value, int len) const;
+		int SetEnum(const char* pFieldName, int32 value) const;
 	private:
 		std::pair<const Reflection*, const FieldDescriptor*> GetRef(const char* pFieldName) const;
 		bool MatchFieldType(FieldDescriptor::Type nFieldType, const FieldDescriptor*) const;
