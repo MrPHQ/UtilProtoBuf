@@ -51,6 +51,10 @@ namespace UTIL_PROTOBUF
 
 	CProtoFileMgr& CProtoFileMgr::Create()
 	{
+		if (CProtoFileMgr::getSingletonPtr() != NULL)
+		{
+			return CProtoFileMgr::getSingleton();
+		}
 		return *(new CProtoFileMgr());
 	}
 
