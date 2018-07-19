@@ -47,6 +47,36 @@ namespace UTIL_PROTOBUF
 		int GetNestedMsgEx(const char* pFieldName, CProtoMessage&);
 
 		/**
+		@brief 新增重复字段(数组)数据.
+			返回新增字段(数组)的引用.如果返回成功,则直接对对象引用赋值.
+			注意: 外部重复使用同一个对象,在使用前需要调用 Close, 释放上一个资源.
+		\param pFieldName
+			消息类型名称.
+		\return CProtoMessage&
+			返回新增字段(数组)的引用
+		*/
+		int AddRepeatedMsg(const char* pFieldName, CProtoMessage&);
+
+		/**
+		@brief 获取重复字段(数组)数据.
+			返回新增字段(数组)的引用.如果返回成功,则直接读取对象引用的值.
+		\param pFieldName
+			消息类型名称.
+		\param iIndex
+			数组下标.
+		\return CProtoMessage&
+			返回新增字段(数组)的引用
+		*/
+		int GetRepeatedMsg(const char* pFieldName, int iIndex, CProtoMessage&);
+
+		/**
+		@brief 获取重复字段(数组)大小.
+		\param pFieldName
+			消息类型名称.
+		*/
+		int GetRepeatedSize(const char* pFieldName);
+
+		/**
 		@brief.
 		*/
 		void Close();
@@ -100,6 +130,17 @@ namespace UTIL_PROTOBUF
 		int GetStringEx(const char* pFieldName, char* buff, int len) const;
 		int GetEnum(const char* pFieldName) const;
 
+		int32 GetRepeatedInt32(const char* pFieldName, int index) const;
+		int64 GetRepeatedInt64(const char* pFieldName, int index) const;
+		uint32 GetRepeatedUInt32(const char* pFieldName, int index) const;
+		uint64 GetRepeatedUInt64(const char* pFieldName, int index) const;
+		float GetRepeatedFloat(const char* pFieldName, int index) const;
+		double GetRepeatedDouble(const char* pFieldName, int index) const;
+		bool GetRepeatedBool(const char* pFieldName, int index) const;
+		string GetRepeatedString(const char* pFieldName, int index) const;
+		int GetRepeatedStringEx(const char* pFieldName, int index, char* buff, int len) const;
+		int GetRepeatedEnum(const char* pFieldName, int index) const;
+
 		/**
 		@brief. 写数据
 		\param pName
@@ -115,6 +156,17 @@ namespace UTIL_PROTOBUF
 		int SetString(const char* pFieldName, const string& value) const;
 		int SetStringEx(const char* pFieldName, const void* value, int len) const;
 		int SetEnum(const char* pFieldName, int32 value) const;
+
+		int SetRepeatedInt32(const char* pFieldName, int index, int32 value) const;
+		int SetRepeatedInt64(const char* pFieldName, int index, int64 value) const;
+		int SetRepeatedUInt32(const char* pFieldName, int index, uint32 value) const;
+		int SetRepeatedUInt64(const char* pFieldName, int index, uint64 value) const;
+		int SetRepeatedFloat(const char* pFieldName, int index, float value) const;
+		int SetRepeatedDouble(const char* pFieldName, int index, double value) const;
+		int SetRepeatedBool(const char* pFieldName, int index, bool value) const;
+		int SetRepeatedString(const char* pFieldName, int index, const string& value) const;
+		int SetRepeatedStringEx(const char* pFieldName, int index, const void* value, int len) const;
+		int SetRepeatedEnum(const char* pFieldName, int index, int32 value) const;
 	private:
 		std::pair<const Reflection*, const FieldDescriptor*> GetRef(const char* pFieldName) const;
 		bool MatchFieldType(FieldDescriptor::Type nFieldType, const FieldDescriptor*) const;
