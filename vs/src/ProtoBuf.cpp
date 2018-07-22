@@ -246,9 +246,6 @@ namespace UTIL_PROTOBUF
 				m_pMessage = nullptr;
 			}
 		}
-		else{
-			Clear();
-		}
 		m_pMessage = nullptr;
 		m_pDescriptor = nullptr;
 	}
