@@ -54,7 +54,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;UTIL_PROTOBUF_EXPORTS;_DEBUG;_WINDOWS;_USRDLL;UTILPROTOBUF_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;UTIL_PROTOBUF_EXPORTS;PROTOBUF_USE_DLLS;_DEBUG;_WINDOWS;_USRDLL;UTILPROTOBUF_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -74,7 +74,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;UTIL_PROTOBUF_EXPORTS;NDEBUG;_WINDOWS;_USRDLL;UTILPROTOBUF_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;UTIL_PROTOBUF_EXPORTS;PROTOBUF_USE_DLLS;NDEBUG;_WINDOWS;_USRDLL;UTILPROTOBUF_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
